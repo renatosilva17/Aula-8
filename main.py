@@ -26,6 +26,10 @@ while True:
 
     opcao = input("digite um numero: ")
     
+    if opcao == "0":
+     print("Saindo do sistema... :p Flwww")
+     break
+
     if opcao == "1":
         print("--->Ver todos os produtos<---")
         print(produtos)
@@ -47,7 +51,7 @@ while True:
 
     if opcao == "4":
         print("--->Cadastrar Produto<---") 
-        id = input("Qual o id? ")
+        id = int(input("Qual o id? "))
         nome = input ("qual o nome do produto? ")
         categoria = input ("Qual a categoria do produto? ")
         preco = input("qual o preco do produto? ")
@@ -69,13 +73,43 @@ while True:
     if opcao == "5":
         print("--->Excluir Produto<---")
         excluir_produto = input("Qual produto (ID) quer excluir? ")
+        produto_encontrado = False
+
         for produto in produtos:
-            if produto ["id"] == excluir_produto:
+            # ADD str() TO BOTH SIDES TO FIX THE TYPE CONFLICT
+            if str(produto["id"]) == str(excluir_produto):
                 produtos.remove(produto)
-                
                 salvar_produtos(produtos)
                 print(f"Produto Excluido com sucesso!")
                 produto_encontrado = True
                 break
-            if not produto_encontrado:
-                print("Produto com este ID nao foi encontrado!")
+
+        if not produto_encontrado:
+            print("Produto com este ID nao foi encontrado!")
+
+    if opcao == "6":
+        print("--->Modificar Produto<---")
+        id_modificar = input("Qual o ID do produto que deseja modificar? ")
+        produto_encontrado = False
+
+        for produto in produtos:    #str para mesmo se o numero for int na comparação vira texto :p#
+            if str(produto["id"]) == str(id_modificar):
+                print(f"Produto encontrado: {produto['nome']}")
+                
+                novo_nome = input(f"Novo nome ({produto['nome']}): ") or produto['nome']
+                nova_cat = input(f"Nova categoria ({produto['categoria']}): ") or produto['categoria']
+                novo_preco = input(f"Novo preço ({produto['preco']}): ") or produto['preco']
+                novo_est = input(f"Novo estoque ({produto['estoque']}): ") or produto['estoque']
+                
+                produto['nome'] = novo_nome
+                produto['categoria'] = nova_cat
+                produto['preco'] = novo_preco
+                produto['estoque'] = novo_est
+                
+                salvar_produtos(produtos)
+                print("Produto modificado e salvo com sucesso!")
+                produto_encontrado = True
+                break
+
+        if not produto_encontrado:
+            print("Produto com este ID nao foi encontrado!")
