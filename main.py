@@ -32,7 +32,13 @@ while True:
 
     if opcao == "1":
         print("--->Ver todos os produtos<---")
-        print(produtos)
+        print(f"{'ID':<5} | {'Nome':<30} | {'Categoria':<15} | {'Preço (R$)':<10} | {'Estoque':<8}")
+        print ("-" * 75)
+
+        for p in produtos:
+         preco_formatado = (f"{float(p['preco']):.2f}")
+
+         print(f"{p['id']:<5} | {p['nome']:<30} | {p['categoria']:<15} | {preco_formatado:<10} | {p['estoque']:<8}")
 
 
     if opcao =="2":
@@ -76,7 +82,7 @@ while True:
         produto_encontrado = False
 
         for produto in produtos:
-            # ADD str() TO BOTH SIDES TO FIX THE TYPE CONFLICT
+            
             if str(produto["id"]) == str(excluir_produto):
                 produtos.remove(produto)
                 salvar_produtos(produtos)
